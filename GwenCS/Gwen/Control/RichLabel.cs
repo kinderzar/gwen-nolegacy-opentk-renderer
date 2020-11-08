@@ -181,7 +181,7 @@ namespace Gwen.Control
 
             Label label = new Label(this);
             label.SetText(x == 0 ? text.TrimStart(' ') : text);
-            label.TextColor = block.Color;
+            label.TextColorOverride = block.Color;
             label.Font = font;
             label.SizeToContents();
             label.SetPosition(x, y);

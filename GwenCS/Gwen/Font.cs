@@ -2,13 +2,38 @@
 
 namespace Gwen
 {
+    [Flags]
+    public enum FontStyle
+    {
+        /// <summary>
+        /// Regular text
+        /// </summary>
+        Regular = 0,
+        /// <summary>
+        /// Bold text
+        /// </summary>
+        Bold = 1,
+        /// <summary>
+        /// Italic text
+        /// </summary>
+        Italic = 2,
+        /// <summary>
+        /// Underlined text
+        /// </summary>
+        Underline = 4,
+        /// <summary>
+        /// Text with a line through the middle.
+        /// </summary>
+        StrikeThrough = 8
+    }
+
     /// <summary>
     /// Represents font resource.
     /// </summary>
     public class Font : IDisposable
     {
         /// <summary>
-        /// Font face name. Exact meaning depends on renderer.
+        /// Font face name. Exact meaning depends on renderer. Do not include font style like bold or italic here.
         /// </summary>
         public string FaceName { get; set; }
 
@@ -18,12 +43,14 @@ namespace Gwen
         public int Size { get; set; }
 
         /// <summary>
+        /// Font style like bold or italic. Use bitwise or (|) to combine styles.
+        /// </summary>
+        public FontStyle FontStyle { get; set; }
+
+        /// <summary>
         /// Enables or disables font smoothing (default: disabled).
         /// </summary>
         public bool Smooth { get; set; }
-
-        //public bool Bold { get; set; }
-        //public bool DropShadow { get; set; }
 
         /// <summary>
         /// This should be set by the renderer if it tries to use a font where it's null.
@@ -52,14 +79,13 @@ namespace Gwen
         /// <param name="renderer">Renderer to use.</param>
         /// <param name="faceName">Face name.</param>
         /// <param name="size">Font size.</param>
-        public Font(Renderer.Base renderer, string faceName, int size = 10)
+        public Font(Renderer.Base renderer, string faceName, int size = 10, FontStyle fontStyle = FontStyle.Regular)
         {
             m_Renderer = renderer;
             FaceName = faceName;
             Size = size;
+            FontStyle = fontStyle;
             Smooth = false;
-            //Bold = false;
-            //DropShadow = false;
         }
 
         /// <summary>
@@ -88,11 +114,10 @@ namespace Gwen
             Font f = new Font(m_Renderer, FaceName)
             {
                 Size = Size,
+                FontStyle = FontStyle,
                 RealSize = RealSize,
                 RendererData = null // must be reinitialized
             };
-            //f.Bold = Bold;
-            //f.DropShadow = DropShadow;
 
             return f;
         }
