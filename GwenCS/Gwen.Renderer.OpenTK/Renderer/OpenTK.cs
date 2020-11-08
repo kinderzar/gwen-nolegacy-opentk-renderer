@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common.Input;
@@ -414,7 +415,7 @@ namespace Gwen.Renderer
 
             // apaprently this can't fail @_@
             // "If you attempt to use a font that is not supported, or the font is not installed on the machine that is running the application, the Microsoft Sans Serif font will be substituted."
-            sysFont = new System.Drawing.Font(font.FaceName, font.Size);
+            sysFont = new System.Drawing.Font(font.FaceName, font.Size, font.FontStyle.ToSystemDrawing());
             font.RendererData = sysFont;
             return true;
         }
